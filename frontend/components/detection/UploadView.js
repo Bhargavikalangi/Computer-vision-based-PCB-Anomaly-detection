@@ -46,10 +46,24 @@ export default function UploadView() {
   return (
     <div style={{ maxWidth: 900, margin: '0 auto' }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: 28 }}>
-        <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 800, marginBottom: 6 }}>
+        <h2
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '1.8rem',
+            fontWeight: 800,
+            marginBottom: 6,
+          }}
+        >
           PCB <span className="gradient-text">Analysis</span>
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem' }}>Upload PCB images for AI-powered anomaly detection</p>
+        <p
+          style={{
+            color: 'var(--text-secondary)',
+            fontSize: '0.875rem',
+          }}
+        >
+          Upload PCB images for AI-powered anomaly detection
+        </p>
       </motion.div>
 
       {/* Drop Zone */}
@@ -67,10 +81,23 @@ export default function UploadView() {
           <input {...getInputProps()} />
           <motion.div animate={{ scale: isDragActive ? 1.05 : 1 }} transition={{ duration: 0.2 }}>
             <div style={{ fontSize: 48, marginBottom: 16, filter: isDragActive ? 'drop-shadow(0 0 20px rgba(99,179,237,0.6))' : 'none' }}>⬡</div>
-            <p style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.1rem', fontWeight: 600, marginBottom: 8, color: isDragActive ? '#63b3ed' : 'rgba(255,255,255,0.8)' }}>
+            <p
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                marginBottom: 8,
+                color: isDragActive ? 'var(--accent-cyan)' : 'var(--text-primary)',
+              }}
+            >
               {isDragActive ? 'Release to upload' : 'Drop PCB images here'}
             </p>
-            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.35)' }}>
+            <p
+              style={{
+                fontSize: '0.82rem',
+                color: 'var(--text-muted)',
+              }}
+            >
               JPG, PNG, BMP, TIFF supported · Max {MAX_FILES} images · Any resolution
             </p>
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="btn-primary" style={{ marginTop: 20 }} onClick={e => e.stopPropagation()}>
@@ -86,8 +113,18 @@ export default function UploadView() {
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
             <GlassCard delay={0} style={{ marginBottom: 16 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.95rem', fontWeight: 600 }}>{files.length} image{files.length > 1 ? 's' : ''} queued</h3>
-                <button className="btn-ghost" style={{ padding: '4px 12px', fontSize: '0.75rem' }} onClick={() => setFiles([])}>Clear all</button>
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  {files.length} image{files.length > 1 ? 's' : ''} queued
+                </h3>
+                <button className="btn-ghost" style={{ padding: '4px 12px', fontSize: '0.75rem' }} onClick={() => setFiles([])}>
+                  Clear all
+                </button>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: 10 }}>
                 {files.map((file) => (
@@ -106,7 +143,16 @@ export default function UploadView() {
 
       {/* Settings + Analyze */}
       <GlassCard delay={0.2}>
-        <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.95rem', fontWeight: 600, marginBottom: 20 }}>Detection Settings</h3>
+        <h3
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '0.95rem',
+            fontWeight: 600,
+            marginBottom: 20,
+          }}
+        >
+          Detection Settings
+        </h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
           <div>
             <label style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: 8 }}>Model</label>

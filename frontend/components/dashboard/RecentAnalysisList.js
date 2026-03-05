@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ export default function RecentAnalysisList() {
   if (items.length === 0) {
     return (
       <div style={{ textAlign: 'center', padding: '24px 0' }}>
-        <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.82rem' }}>No analyses yet</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>No analyses yet</p>
       </div>
     );
   }
@@ -35,12 +35,12 @@ export default function RecentAnalysisList() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.06 }}
-            whileHover={{ x: 3, background: 'rgba(255,255,255,0.05)' }}
+            whileHover={{ x: 3, background: 'var(--bg-card-hover)' }}
             style={{
               display: 'flex', alignItems: 'center', gap: 12,
               padding: '10px 12px', borderRadius: 10,
-              background: 'rgba(255,255,255,0.02)',
-              border: '1px solid rgba(255,255,255,0.05)',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-glass)',
               transition: 'all 0.2s ease',
             }}
           >
@@ -50,10 +50,10 @@ export default function RecentAnalysisList() {
               boxShadow: `0 0 8px ${item.status === 'pass' ? '#48bb78' : '#fc8181'}`,
             }} />
             <div style={{ flex: 1, overflow: 'hidden' }}>
-              <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {item.filename}
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', marginTop: 1 }}>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: 1 }}>
                 {formatDistanceToNow(safeDate(item.created_at), { addSuffix: true })}
               </div>
             </div>
@@ -61,7 +61,7 @@ export default function RecentAnalysisList() {
               <div style={{ fontSize: '0.75rem', color: item.total_defects > 0 ? '#fc8181' : '#48bb78', fontWeight: 500 }}>
                 {item.total_defects > 0 ? `${item.total_defects} defects` : 'Clean'}
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)' }}>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
                 {item.overall_confidence?.toFixed(1)}%
               </div>
             </div>

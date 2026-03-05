@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -8,9 +8,9 @@ const CustomTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   const item = payload[0];
   return (
-    <div style={{ background: 'rgba(13,17,23,0.95)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '8px 12px' }}>
+    <div style={{ background: 'var(--bg-secondary)', backdropFilter: 'blur(20px)', border: '1px solid var(--border-glass)', borderRadius: 10, padding: '8px 12px' }}>
       <p style={{ fontSize: '0.8rem', color: item.payload.color, fontWeight: 600 }}>{item.name}</p>
-      <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>{item.value}%</p>
+      <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{item.value}%</p>
     </div>
   );
 };
@@ -35,7 +35,7 @@ export default function DefectDistributionChart() {
   if (data.length === 0) {
     return (
       <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.82rem', textAlign: 'center' }}>No defects detected yet</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textAlign: 'center' }}>No defects detected yet</p>
       </div>
     );
   }
@@ -57,9 +57,9 @@ export default function DefectDistributionChart() {
           <div key={item.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 8, height: 8, borderRadius: 2, background: item.color, flexShrink: 0 }} />
-              <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.55)' }}>{item.name}</span>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>{item.name}</span>
             </div>
-            <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>{item.value}%</span>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-primary)', fontWeight: 500 }}>{item.value}%</span>
           </div>
         ))}
       </div>

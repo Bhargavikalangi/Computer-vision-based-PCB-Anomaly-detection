@@ -28,10 +28,22 @@ export default function DashboardView() {
         style={{ marginBottom: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}
       >
         <div>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 800, marginBottom: 6 }}>
+          <h2
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '1.8rem',
+              fontWeight: 800,
+              marginBottom: 6,
+            }}
+          >
             System <span className="gradient-text">Overview</span>
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem' }}>
+          <p
+            style={{
+              color: 'var(--text-secondary)',
+              fontSize: '0.875rem',
+            }}
+          >
             Real-time PCB anomaly detection metrics
           </p>
         </div>
@@ -57,8 +69,24 @@ export default function DashboardView() {
         <GlassCard delay={0.2}>
           <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1rem', fontWeight: 600, marginBottom: 2 }}>Defect Trend</h3>
-              <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)' }}>Last 30 days</p>
+              <h3
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  marginBottom: 2,
+                }}
+              >
+                Defect Trend
+              </h3>
+              <p
+                style={{
+                  fontSize: '0.75rem',
+                  color: 'var(--text-muted)',
+                }}
+              >
+                Last 30 days
+              </p>
             </div>
           </div>
           <DefectTrendChart />
@@ -66,8 +94,24 @@ export default function DashboardView() {
 
         <GlassCard delay={0.25}>
           <div style={{ marginBottom: 16 }}>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1rem', fontWeight: 600, marginBottom: 2 }}>Defect Types</h3>
-            <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)' }}>Distribution</p>
+            <h3
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '1rem',
+                fontWeight: 600,
+                marginBottom: 2,
+              }}
+            >
+              Defect Types
+            </h3>
+            <p
+              style={{
+                fontSize: '0.75rem',
+                color: 'var(--text-muted)',
+              }}
+            >
+              Distribution
+            </p>
           </div>
           <DefectDistributionChart />
         </GlassCard>
@@ -76,12 +120,30 @@ export default function DashboardView() {
       {/* Bottom Row */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
         <GlassCard delay={0.3}>
-          <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1rem', fontWeight: 600, marginBottom: 16 }}>Recent Analyses</h3>
+          <h3
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '1rem',
+              fontWeight: 600,
+              marginBottom: 16,
+            }}
+          >
+            Recent Analyses
+          </h3>
           <RecentAnalysisList />
         </GlassCard>
 
         <GlassCard delay={0.35}>
-          <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1rem', fontWeight: 600, marginBottom: 16 }}>Defect Heatmap</h3>
+          <h3
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '1rem',
+              fontWeight: 600,
+              marginBottom: 16,
+            }}
+          >
+            Defect Heatmap
+          </h3>
           <DefectHeatmap />
         </GlassCard>
       </div>
