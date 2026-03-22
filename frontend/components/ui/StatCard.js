@@ -45,9 +45,9 @@ export default function StatCard({ label, value, unit = '', change, icon, color 
           <div style={{
             display: 'flex', alignItems: 'center', gap: 4,
             padding: '3px 8px', borderRadius: 6,
-            background: isPositive ? 'rgba(72,187,120,0.1)' : isNegative ? 'rgba(252,129,129,0.1)' : 'rgba(255,255,255,0.05)',
+            background: isPositive ? 'rgba(72,187,120,0.1)' : isNegative ? 'rgba(252,129,129,0.1)' : 'var(--panel-bg)',
             fontSize: '0.7rem', fontWeight: 500,
-            color: isPositive ? '#48bb78' : isNegative ? '#fc8181' : 'rgba(255,255,255,0.4)',
+            color: isPositive ? '#48bb78' : isNegative ? '#fc8181' : 'var(--text-muted)',
           }}>
             {isPositive ? '↑' : isNegative ? '↓' : '→'} {Math.abs(change)}%
           </div>
@@ -55,21 +55,52 @@ export default function StatCard({ label, value, unit = '', change, icon, color 
       </div>
 
       <div style={{ marginBottom: 4 }}>
-        <div style={{
-          fontFamily: 'Syne, sans-serif',
-          fontSize: '2rem', fontWeight: 700,
-          color: 'rgba(255,255,255,0.95)',
-          lineHeight: 1,
-          display: 'flex', alignItems: 'baseline', gap: 4,
-        }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: 'var(--text-primary)',
+            lineHeight: 1,
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: 4,
+          }}
+        >
           <AnimatedNumber value={value} decimals={typeof value === 'number' && value % 1 !== 0 ? 1 : 0} />
-          {unit && <span style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>{unit}</span>}
+          {unit && (
+            <span
+              style={{
+                fontSize: '1rem',
+                color: 'var(--text-secondary)',
+                fontWeight: 400,
+              }}
+            >
+              {unit}
+            </span>
+          )}
         </div>
       </div>
 
-      <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.45)', fontWeight: 400 }}>{label}</div>
+      <div
+        style={{
+          fontSize: '0.8rem',
+          color: 'var(--text-secondary)',
+          fontWeight: 400,
+        }}
+      >
+        {label}
+      </div>
       {description && (
-        <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.25)', marginTop: 4 }}>{description}</div>
+        <div
+          style={{
+            fontSize: '0.7rem',
+            color: 'var(--text-muted)',
+            marginTop: 4,
+          }}
+        >
+          {description}
+        </div>
       )}
     </GlassCard>
   );

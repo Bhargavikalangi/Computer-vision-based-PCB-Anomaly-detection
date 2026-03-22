@@ -1,10 +1,10 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const GRID_SIZE = 10;
 
 const getColor = (val) => {
-  if (val < 0.1) return 'rgba(255,255,255,0.03)';
+  if (val < 0.1) return 'var(--panel-bg)';
   if (val < 0.3) return `rgba(99,179,237,${val * 0.6})`;
   if (val < 0.6) return `rgba(246,224,94,${val * 0.7})`;
   if (val < 0.8) return `rgba(237,137,54,${val * 0.8})`;
@@ -148,7 +148,7 @@ Keep it friendly, clear, and under 80 words. No bullet points, just natural para
     <div>
       {/* Header with bulb button */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-        <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)' }}>
+        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
           {totalDefects > 0 ? `${totalDefects} defect${totalDefects !== 1 ? 's' : ''} mapped` : 'No defects yet'}
         </span>
         {!empty && (
@@ -158,8 +158,8 @@ Keep it friendly, clear, and under 80 words. No bullet points, just natural para
             onClick={handleInsight}
             title="Get AI explanation of this heatmap"
             style={{
-              background: showInsight ? 'rgba(246,224,94,0.2)' : 'rgba(255,255,255,0.05)',
-              border: `1px solid ${showInsight ? 'rgba(246,224,94,0.5)' : 'rgba(255,255,255,0.1)'}`,
+              background: showInsight ? 'rgba(246,224,94,0.2)' : 'var(--panel-bg)',
+              border: `1px solid ${showInsight ? 'rgba(246,224,94,0.5)' : 'var(--input-border)'}`,
               borderRadius: '50%', width: 32, height: 32, cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 16, transition: 'all 0.2s ease',
@@ -192,10 +192,10 @@ Keep it friendly, clear, and under 80 words. No bullet points, just natural para
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
                     style={{ width: 14, height: 14, border: '2px solid rgba(246,224,94,0.3)', borderTopColor: 'rgba(246,224,94,0.9)', borderRadius: '50%' }} />
-                  <span style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.4)' }}>Analyzing heatmap...</span>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Analyzing heatmap...</span>
                 </div>
               ) : (
-                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, margin: 0 }}>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
                   {insight}
                 </p>
               )}
@@ -207,7 +207,7 @@ Keep it friendly, clear, and under 80 words. No bullet points, just natural para
       {/* Heatmap grid */}
       {empty ? (
         <div style={{ textAlign: 'center', padding: '32px 0' }}>
-          <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.82rem' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>
             No defects yet â€” heatmap populates after failed analyses
           </p>
         </div>
@@ -223,7 +223,7 @@ Keep it friendly, clear, and under 80 words. No bullet points, just natural para
                 style={{
                   aspectRatio: '1', borderRadius: 4,
                   background: getColor(val),
-                  border: '1px solid rgba(255,255,255,0.04)',
+                  border: '1px solid var(--border-glass)',
                   cursor: 'pointer', transition: 'transform 0.15s ease',
                 }}
                 whileHover={{ scale: 1.4, zIndex: 1 }}
@@ -231,9 +231,9 @@ Keep it friendly, clear, and under 80 words. No bullet points, just natural para
             ))}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
-            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)' }}>Low</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--chart-muted)' }}>Low</span>
             <div style={{ height: 6, width: 120, borderRadius: 3, background: 'linear-gradient(90deg, rgba(99,179,237,0.4), rgba(246,224,94,0.7), rgba(237,137,54,0.8), rgba(252,129,129,1))' }} />
-            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)' }}>High</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--chart-muted)' }}>High</span>
           </div>
         </>
       )}

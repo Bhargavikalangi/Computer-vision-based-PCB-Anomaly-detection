@@ -28,15 +28,17 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="PCB Anomaly Detection API",
-    description="Computer vision API for detecting PCB defects using YOLOv8",
+    description="Computer vision API for detecting PCB defects",
     version="1.0.0",
     lifespan=lifespan,
 )
 
+# allow_origins=["*"] is only valid with allow_credentials=False (browser CORS spec).
+# This avoids missing ACAO headers when clients use different ports or hostnames.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

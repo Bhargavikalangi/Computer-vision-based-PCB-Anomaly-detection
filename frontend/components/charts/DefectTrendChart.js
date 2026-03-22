@@ -1,12 +1,12 @@
-﻿'use client';
+'use client';
 import { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div style={{ background: 'rgba(13,17,23,0.95)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '10px 14px' }}>
-      <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>{label}</p>
+    <div style={{ background: 'var(--bg-secondary)', backdropFilter: 'blur(20px)', border: '1px solid var(--border-glass)', borderRadius: 10, padding: '10px 14px' }}>
+      <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: 6 }}>{label}</p>
       {payload.map(p => (
         <p key={p.name} style={{ fontSize: '0.8rem', color: p.color, fontWeight: 500 }}>
           {p.name === 'analyses' ? '◎ Analyses' : '⚠ Defects'}: {p.value}
@@ -37,7 +37,7 @@ export default function DefectTrendChart() {
   if (data.length === 0) {
     return (
       <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.82rem' }}>No trend data yet — upload more images</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>No trend data yet — upload more images</p>
       </div>
     );
   }
@@ -55,9 +55,9 @@ export default function DefectTrendChart() {
             <stop offset="95%" stopColor="#fc8181" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-        <XAxis dataKey="day" tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} axisLine={false} tickLine={false} />
-        <YAxis tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} axisLine={false} tickLine={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border-glass)" />
+        <XAxis dataKey="day" tick={{ fill: 'var(--chart-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
+        <YAxis tick={{ fill: 'var(--chart-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
         <Tooltip content={<CustomTooltip />} />
         <Area type="monotone" dataKey="analyses" stroke="#63b3ed" strokeWidth={2} fill="url(#analysisGrad)" name="analyses" dot={false} />
         <Area type="monotone" dataKey="defects" stroke="#fc8181" strokeWidth={2} fill="url(#defectGrad)" name="defects" dot={false} />

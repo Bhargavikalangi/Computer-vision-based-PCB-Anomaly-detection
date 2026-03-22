@@ -5,7 +5,7 @@ import GlassCard from '@/components/ui/GlassCard';
 const STAGES = [
   { id: 'upload', label: 'Uploading images', icon: '⬆' },
   { id: 'preprocess', label: 'Preprocessing & normalization', icon: '◈' },
-  { id: 'inference', label: 'Running detection model', icon: '⬡' },
+  { id: 'inference', label: 'Running OpenCV detection', icon: '⬡' },
   { id: 'postprocess', label: 'Post-processing results', icon: '◎' },
   { id: 'save', label: 'Saving to database', icon: '◻' },
 ];
@@ -43,15 +43,15 @@ export default function AnalysisProgress({ progress, fileCount }) {
           </div>
         </div>
 
-        <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.4rem', fontWeight: 700, marginBottom: 8 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', fontWeight: 700, marginBottom: 8, color: 'var(--text-primary)' }}>
           Analyzing PCB Images
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', marginBottom: 32 }}>
-          Processing {fileCount} image{fileCount > 1 ? 's' : ''} with AI detection model
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 32 }}>
+          Processing {fileCount} image{fileCount > 1 ? 's' : ''} with OpenCV rule-based detection
         </p>
 
         {/* Progress bar */}
-        <div style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 999, height: 6, marginBottom: 32, overflow: 'hidden' }}>
+        <div style={{ background: 'var(--input-bg)', borderRadius: 999, height: 6, marginBottom: 32, overflow: 'hidden' }}>
           <motion.div
             animate={{ width: `${pct}%` }}
             transition={{ duration: 0.3 }}
@@ -70,16 +70,16 @@ export default function AnalysisProgress({ progress, fileCount }) {
               <div key={stage.id} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{
                   width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-                  background: done ? 'rgba(72,187,120,0.15)' : active ? 'rgba(99,179,237,0.15)' : 'rgba(255,255,255,0.04)',
-                  border: `1px solid ${done ? 'rgba(72,187,120,0.3)' : active ? 'rgba(99,179,237,0.3)' : 'rgba(255,255,255,0.06)'}`,
+                  background: done ? 'rgba(72,187,120,0.15)' : active ? 'rgba(99,179,237,0.15)' : 'var(--panel-bg)',
+                  border: `1px solid ${done ? 'rgba(72,187,120,0.3)' : active ? 'rgba(99,179,237,0.3)' : 'var(--border-glass)'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12,
-                  color: done ? '#48bb78' : active ? '#63b3ed' : 'rgba(255,255,255,0.2)',
+                  color: done ? '#48bb78' : active ? '#63b3ed' : 'var(--text-muted)',
                 }}>
                   {done ? '✓' : active ? (
                     <motion.span animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}>◎</motion.span>
                   ) : stage.icon}
                 </div>
-                <span style={{ fontSize: '0.82rem', color: done ? '#48bb78' : active ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.25)', fontWeight: active ? 500 : 400 }}>
+                <span style={{ fontSize: '0.82rem', color: done ? '#48bb78' : active ? 'var(--text-primary)' : 'var(--text-muted)', fontWeight: active ? 500 : 400 }}>
                   {stage.label}
                 </span>
               </div>

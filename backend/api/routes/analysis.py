@@ -1,6 +1,5 @@
-from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException, BackgroundTasks
+from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import Optional
 import aiofiles
 import os
 import uuid
@@ -20,11 +19,13 @@ detector = PCBDetector()
 
 ALLOWED_EXT = {".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".tif"}
 
+# Detection uses OpenCV rule-based heuristics only (no selectable ML model). Engine id: opencv.
+MODEL_USED_LABEL = "OpenCV Rule-Based"
+
 
 @router.post("/analyze", response_model=AnalysisResponse)
 async def analyze_pcb(
     file: UploadFile = File(...),
-    model: str = Form("yolov8n"),
     confidence: float = Form(0.5),
     annotate: bool = Form(True),
     db: Session = Depends(get_db),
@@ -51,7 +52,7 @@ async def analyze_pcb(
         filename=file.filename,
         original_path=upload_path,
         status="processing",
-        model_used=model,
+        model_used=MODEL_USED_LABEL,
         confidence_threshold=confidence,
     )
     db.add(analysis)
@@ -61,7 +62,7 @@ async def analyze_pcb(
         result = detector.detect(
             image_path=upload_path,
             confidence=confidence,
-            model_name=model,
+            model_name=MODEL_USED_LABEL,
             annotate=annotate,
             result_dir=settings.RESULTS_DIR,
         )
