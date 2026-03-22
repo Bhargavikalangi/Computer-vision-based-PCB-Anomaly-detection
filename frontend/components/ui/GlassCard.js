@@ -22,7 +22,7 @@ export default function GlassCard({ children, className = '', style = {}, hover 
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0,
         height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+        background: `linear-gradient(90deg, transparent, var(--glass-highlight), transparent)`,
         pointerEvents: 'none',
       }} />
       {children}

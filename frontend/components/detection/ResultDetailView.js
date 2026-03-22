@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import GlassCard from '@/components/ui/GlassCard';
@@ -41,7 +41,7 @@ export default function ResultDetailView({ id }) {
   const mockResult = {
     id, filename: 'pcb_sample_board.jpg',
     status: 'fail', created_at: new Date(Date.now() - 3600000),
-    processing_time: 1.24, model: 'YOLOv8 Medium',
+    processing_time: 1.24, model_used: 'OpenCV Rule-Based',
     defects: [
       ],
     overall_confidence: 94.2,
@@ -61,11 +61,11 @@ export default function ResultDetailView({ id }) {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 6 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.6rem', fontWeight: 800 }}>{data.filename}</h2>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)' }}>{data.filename}</h2>
             <span className={`badge badge-${data.status === 'pass' ? 'pass' : 'critical'}`}>{data.status?.toUpperCase()}</span>
           </div>
-          <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.8rem' }}>
-            Analyzed {formatDistanceToNow(new Date(data.created_at), { addSuffix: true })} · {data.model} · {data.processing_time}s
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+            Analyzed {formatDistanceToNow(new Date(data.created_at), { addSuffix: true })} · {data.model_used || data.model} · {data.processing_time}s
           </p>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
@@ -95,15 +95,15 @@ export default function ResultDetailView({ id }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {/* Summary */}
           <GlassCard delay={0.15}>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.9rem', fontWeight: 600, marginBottom: 16 }}>Summary</h3>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem', fontWeight: 600, marginBottom: 16, color: 'var(--text-primary)' }}>Summary</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {[
                 { label: 'Defects', value: data.defects?.length ?? 0, color: data.defects?.length ? '#fc8181' : '#48bb78' },
                 { label: 'Confidence', value: `${data.overall_confidence?.toFixed(1)}%`, color: '#63b3ed' },
               ].map(item => (
-                <div key={item.label} style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.5rem', fontWeight: 700, color: item.color }}>{item.value}</div>
-                  <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>{item.label}</div>
+                <div key={item.label} style={{ background: 'var(--panel-bg)', borderRadius: 10, padding: '12px', textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 700, color: item.color }}>{item.value}</div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: 2 }}>{item.label}</div>
                 </div>
               ))}
             </div>
@@ -111,7 +111,7 @@ export default function ResultDetailView({ id }) {
 
           {/* Defects list */}
           <GlassCard delay={0.2} style={{ flex: 1 }}>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.9rem', fontWeight: 600, marginBottom: 14 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem', fontWeight: 600, marginBottom: 14, color: 'var(--text-primary)' }}>
               Detected Anomalies ({data.defects?.length ?? 0})
             </h3>
             <DefectDetailPanel defects={data.defects} selectedDefect={selectedDefect} onSelect={setSelectedDefect} />

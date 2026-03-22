@@ -6,10 +6,12 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   async rewrites() {
+    const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     return [
       {
+        // Proxy browser /api/* → FastAPI /api/* (same-origin option; avoids CORS when using relative baseURL)
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/:path*`,
+        destination: `${api}/api/:path*`,
       },
     ];
   },

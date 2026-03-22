@@ -16,7 +16,7 @@ export default function UploadView() {
   const [files, setFiles] = useState([]);
   const [analyzing, setAnalyzing] = useState(false);
   const [progress, setProgress] = useState(null);
-  const [settings, setSettings] = useState({ confidence: 0.5, model: 'yolov8n', annotate: true });
+  const [settings, setSettings] = useState({ confidence: 0.5, annotate: true });
 
   const onDrop = useCallback((accepted) => {
     const newFiles = accepted.map(f => Object.assign(f, { preview: URL.createObjectURL(f), id: Math.random().toString(36).slice(2) }));
@@ -62,7 +62,7 @@ export default function UploadView() {
             fontSize: '0.875rem',
           }}
         >
-          Upload PCB images for AI-powered anomaly detection
+          Upload PCB images for OpenCV rule-based anomaly detection
         </p>
       </motion.div>
 
@@ -72,7 +72,7 @@ export default function UploadView() {
           {...getRootProps()}
           style={{
             padding: 48, textAlign: 'center', cursor: 'pointer',
-            border: `2px dashed ${isDragActive ? 'rgba(99,179,237,0.6)' : 'rgba(255,255,255,0.1)'}`,
+            border: `2px dashed ${isDragActive ? 'rgba(99,179,237,0.6)' : 'var(--border-glass)'}`,
             borderRadius: 22,
             background: isDragActive ? 'rgba(99,179,237,0.05)' : 'transparent',
             transition: 'all 0.25s ease',
@@ -129,7 +129,7 @@ export default function UploadView() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: 10 }}>
                 {files.map((file) => (
                   <motion.div key={file.id} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
-                    style={{ position: 'relative', aspectRatio: '1', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    style={{ position: 'relative', aspectRatio: '1', borderRadius: 10, overflow: 'hidden', border: '1px solid var(--border-glass)' }}>
                     <img src={file.preview} alt={file.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     <button onClick={() => removeFile(file.id)}
                       style={{ position: 'absolute', top: 4, right: 4, background: 'rgba(0,0,0,0.7)', border: 'none', borderRadius: '50%', width: 20, height: 20, cursor: 'pointer', color: 'white', fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
@@ -155,26 +155,33 @@ export default function UploadView() {
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
           <div>
-            <label style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: 8 }}>Model</label>
-            <select value={settings.model} onChange={e => setSettings(s => ({ ...s, model: e.target.value }))}
-              style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '10px 14px', color: 'rgba(255,255,255,0.85)', fontSize: '0.85rem', cursor: 'pointer' }}>
-              <option value="yolov8m">YOLOv8 Medium</option>
-              <option value="yolov8n">YOLOv8 Nano (Fast)</option>
-              <option value="yolov8s">YOLOv8 Small</option>
-            </select>
+            <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}>Detection engine</label>
+            <div
+              style={{
+                width: '100%',
+                background: 'var(--input-bg)',
+                border: '1px solid var(--input-border)',
+                borderRadius: 10,
+                padding: '10px 14px',
+                color: 'var(--text-primary)',
+                fontSize: '0.85rem',
+              }}
+            >
+              Engine: OpenCV (Rule-Based)
+            </div>
           </div>
           <div>
-            <label style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: 8 }}>Confidence: {(settings.confidence * 100).toFixed(0)}%</label>
+            <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}>Confidence: {(settings.confidence * 100).toFixed(0)}%</label>
             <input type="range" min="20" max="95" value={settings.confidence * 100} onChange={e => setSettings(s => ({ ...s, confidence: e.target.value / 100 }))}
               style={{ width: '100%', accentColor: '#63b3ed', marginTop: 6 }} />
           </div>
           <div style={{ display: 'flex', alignItems: 'flex-end' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
               <div onClick={() => setSettings(s => ({ ...s, annotate: !s.annotate }))}
-                style={{ width: 40, height: 22, borderRadius: 11, background: settings.annotate ? '#63b3ed' : 'rgba(255,255,255,0.1)', border: `1px solid ${settings.annotate ? '#63b3ed' : 'rgba(255,255,255,0.15)'}`, position: 'relative', transition: 'all 0.2s ease', cursor: 'pointer' }}>
-                <div style={{ position: 'absolute', top: 3, left: settings.annotate ? 21 : 3, width: 14, height: 14, borderRadius: '50%', background: 'white', transition: 'left 0.2s ease' }} />
+                style={{ width: 40, height: 22, borderRadius: 11, background: settings.annotate ? '#63b3ed' : 'var(--input-bg)', border: `1px solid ${settings.annotate ? '#63b3ed' : 'var(--input-border)'}`, position: 'relative', transition: 'all 0.2s ease', cursor: 'pointer' }}>
+                <div style={{ position: 'absolute', top: 3, left: settings.annotate ? 21 : 3, width: 14, height: 14, borderRadius: '50%', background: 'var(--bg-secondary)', transition: 'left 0.2s ease' }} />
               </div>
-              <span style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.6)' }}>Annotate output</span>
+              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>Annotate output</span>
             </label>
           </div>
         </div>

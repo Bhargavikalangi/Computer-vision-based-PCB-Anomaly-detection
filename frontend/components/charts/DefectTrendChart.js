@@ -55,9 +55,9 @@ export default function DefectTrendChart() {
             <stop offset="95%" stopColor="#fc8181" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-        <XAxis dataKey="day" tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} axisLine={false} tickLine={false} />
-        <YAxis tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} axisLine={false} tickLine={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border-glass)" />
+        <XAxis dataKey="day" tick={{ fill: 'var(--chart-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
+        <YAxis tick={{ fill: 'var(--chart-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
         <Tooltip content={<CustomTooltip />} />
         <Area type="monotone" dataKey="analyses" stroke="#63b3ed" strokeWidth={2} fill="url(#analysisGrad)" name="analyses" dot={false} />
         <Area type="monotone" dataKey="defects" stroke="#fc8181" strokeWidth={2} fill="url(#defectGrad)" name="defects" dot={false} />

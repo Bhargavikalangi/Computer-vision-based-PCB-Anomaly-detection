@@ -12,8 +12,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // suppressHydrationWarning on <html>: extensions may inject attrs (speedupyoutubeads, etc.) and cause hydration noise
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="theme-light">
         <ThemeProvider>
           <BackgroundMesh />
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
                   overflowY: 'auto',
                   padding: '24px',
                   paddingLeft: '28px',
+                  color: 'var(--text-primary)',
                 }}
               >
                 {children}

@@ -3,7 +3,9 @@ step 2: split termnial  open two terminal one is /backend and one is /frontend
 step 3 : execute the belw commands in backend
    ~ venv\Scripts\activate
    ~ python -m uvicorn main:app --host 0.0.0.0 --port 8000
-step 4 : go the front end termnial and 
-   ~ npm run 
+step 4 : cd .. 
+cd frontend
+go the front end termnial and 
+   ~ npm run dev
 open brower to check frist backend  :  http://localhost:8000/docs
 ui is :  http://localhost:3000

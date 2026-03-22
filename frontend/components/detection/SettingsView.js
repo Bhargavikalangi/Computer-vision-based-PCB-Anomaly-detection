@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 export default function SettingsView() {
   const [settings, setSettings] = useState({
-    defaultModel: 'yolov8s', defaultConfidence: 50,
+    defaultConfidence: 50,
     autoAnnotate: true, saveOriginal: true,
     notifyOnFail: true, batchSize: 4,
     dbRetention: 90, apiKey: '',
@@ -19,17 +19,17 @@ export default function SettingsView() {
   const ToggleSwitch = ({ value, onChange }) => (
     <div onClick={onChange} style={{
       width: 44, height: 24, borderRadius: 12, cursor: 'pointer',
-      background: value ? '#63b3ed' : 'rgba(255,255,255,0.1)',
-      border: `1px solid ${value ? '#63b3ed' : 'rgba(255,255,255,0.15)'}`,
+      background: value ? '#63b3ed' : 'var(--input-bg)',
+      border: `1px solid ${value ? '#63b3ed' : 'var(--input-border)'}`,
       position: 'relative', transition: 'all 0.2s ease', flexShrink: 0,
     }}>
-      <div style={{ position: 'absolute', top: 4, left: value ? 23 : 4, width: 14, height: 14, borderRadius: '50%', background: 'white', transition: 'left 0.2s ease' }} />
+      <div style={{ position: 'absolute', top: 4, left: value ? 23 : 4, width: 14, height: 14, borderRadius: '50%', background: 'var(--bg-secondary)', transition: 'left 0.2s ease' }} />
     </div>
   );
 
   const Section = ({ title, children, delay }) => (
     <GlassCard delay={delay} style={{ marginBottom: 16 }}>
-      <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.95rem', fontWeight: 600, marginBottom: 20, paddingBottom: 12, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>{title}</h3>
+      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '0.95rem', fontWeight: 600, marginBottom: 20, paddingBottom: 12, borderBottom: '1px solid var(--border-glass)', color: 'var(--text-primary)' }}>{title}</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>{children}</div>
     </GlassCard>
   );
@@ -37,8 +37,8 @@ export default function SettingsView() {
   const Row = ({ label, description, children }) => (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
       <div>
-        <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)', fontWeight: 400 }}>{label}</div>
-        {description && <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>{description}</div>}
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 400 }}>{label}</div>
+        {description && <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: 2 }}>{description}</div>}
       </div>
       {children}
     </div>
@@ -47,20 +47,26 @@ export default function SettingsView() {
   return (
     <div style={{ maxWidth: 700, margin: '0 auto' }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: 28 }}>
-        <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 800, marginBottom: 6 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', fontWeight: 800, marginBottom: 6, color: 'var(--text-primary)' }}>
           System <span className="gradient-text">Settings</span>
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem' }}>Configure detection model and system behavior</p>
-      </motion.div>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Configure detection settings and system behavior</p>
+  </motion.div>
 
-      <Section title="Detection Model" delay={0.1}>
-        <Row label="Default Model" description="Model used for new analyses">
-          <select value={settings.defaultModel} onChange={e => set('defaultModel', e.target.value)}
-            style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '8px 14px', color: 'rgba(255,255,255,0.85)', fontSize: '0.82rem', cursor: 'pointer' }}>
-            <option value="yolov8m">YOLOv8 Medium</option>
-            <option value="yolov8n">YOLOv8 Nano</option>
-            <option value="yolov8s">YOLOv8 Small</option>
-          </select>
+      <Section title="Detection" delay={0.1}>
+        <Row label="Engine" description="Fixed pipeline for all analyses">
+          <div
+            style={{
+              background: 'var(--input-bg)',
+              border: '1px solid var(--input-border)',
+              borderRadius: 10,
+              padding: '8px 14px',
+              color: 'var(--text-primary)',
+              fontSize: '0.82rem',
+            }}
+          >
+            Engine: OpenCV (Rule-Based)
+          </div>
         </Row>
         <Row label={`Confidence Threshold: ${settings.defaultConfidence}%`} description="Minimum confidence to report a defect">
           <input type="range" min="20" max="95" value={settings.defaultConfidence} onChange={e => set('defaultConfidence', Number(e.target.value))}
@@ -68,7 +74,7 @@ export default function SettingsView() {
         </Row>
         <Row label="Batch Size" description="Images processed simultaneously">
           <input type="number" min="1" max="16" value={settings.batchSize} onChange={e => set('batchSize', Number(e.target.value))}
-            style={{ width: 80, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '8px 12px', color: 'rgba(255,255,255,0.85)', fontSize: '0.82rem', textAlign: 'center' }} />
+            style={{ width: 80, background: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: 10, padding: '8px 12px', color: 'var(--text-primary)', fontSize: '0.82rem', textAlign: 'center' }} />
         </Row>
       </Section>
 

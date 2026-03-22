@@ -79,7 +79,7 @@ export default function TopBar() {
 
       {/* System status + theme toggle */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <StatusPill label="Model" status={status?.model || 'idle'} />
+        <EnginePill label="Engine" value={status?.detection_engine || 'OpenCV Rule-Based'} />
         <StatusPill label="API" status={status?.api || 'online'} />
         <button
           type="button"
@@ -102,6 +102,38 @@ export default function TopBar() {
         </button>
       </div>
     </header>
+  );
+}
+
+function EnginePill({ label, value }) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-glass)',
+        borderRadius: 8,
+        padding: '4px 10px',
+        maxWidth: 220,
+      }}
+    >
+      <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: 500 }}>{label}</span>
+      <span
+        style={{
+          fontSize: '0.65rem',
+          color: 'var(--text-primary)',
+          fontWeight: 600,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+        title={value}
+      >
+        {value}
+      </span>
+    </div>
   );
 }
 

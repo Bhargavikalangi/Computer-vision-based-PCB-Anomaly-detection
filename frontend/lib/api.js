@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+// Analyze endpoint accepts file, confidence, annotate only (no model selection; backend uses OpenCV rule-based engine).
+// Empty baseURL = same-origin requests to /api/* → Next.js rewrites to FastAPI (no browser CORS).
+// Set NEXT_PUBLIC_API_URL only if you must call the backend host directly (then backend CORS must allow your origin).
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? '';
 
 export const api = axios.create({
   baseURL: API_BASE,
@@ -26,7 +29,6 @@ export async function analyzeImage(files, settings, onProgress) {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('model', settings.model);
     formData.append('confidence', settings.confidence);
     formData.append('annotate', settings.annotate);
 

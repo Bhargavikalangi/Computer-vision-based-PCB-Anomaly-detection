@@ -155,14 +155,14 @@ export default function ResultsListView() {
             >
               <div style={{
                 height: 120, borderRadius: 10, marginBottom: 14, overflow: 'hidden',
-                background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)',
+                background: 'var(--panel-bg)', border: '1px solid var(--border-glass)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',
               }}>
                 {result.annotated_image_url ? (
                   <img src={result.annotated_image_url} alt={result.filename}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
-                  <span style={{ fontSize: 32, color: 'rgba(255,255,255,0.1)' }}>⬡</span>
+                  <span style={{ fontSize: 32, color: 'var(--text-muted)' }}>⬡</span>
                 )}
                 <div style={{
                   position: 'absolute', top: 8, right: 8, width: 8, height: 8, borderRadius: '50%',
@@ -171,10 +171,10 @@ export default function ResultsListView() {
                 }} />
               </div>
 
-              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255,255,255,0.85)', marginBottom: 4, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {result.filename}
               </div>
-              <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>
+              <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: 12 }}>
                 {formatDistanceToNow(safeDate(result.created_at), { addSuffix: true })}
               </div>
 
@@ -183,7 +183,7 @@ export default function ResultsListView() {
                   {result.status?.toUpperCase()}
                 </span>
                 <div style={{ display: 'flex', gap: 10 }}>
-                  <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.35)' }}>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                     {result.total_defects ?? 0} defect{result.total_defects !== 1 ? 's' : ''}
                   </span>
                   <span style={{ fontSize: '0.72rem', color: 'rgba(99,179,237,0.7)' }}>

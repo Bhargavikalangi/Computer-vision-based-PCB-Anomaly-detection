@@ -45,9 +45,9 @@ export default function StatCard({ label, value, unit = '', change, icon, color 
           <div style={{
             display: 'flex', alignItems: 'center', gap: 4,
             padding: '3px 8px', borderRadius: 6,
-            background: isPositive ? 'rgba(72,187,120,0.1)' : isNegative ? 'rgba(252,129,129,0.1)' : 'rgba(255,255,255,0.05)',
+            background: isPositive ? 'rgba(72,187,120,0.1)' : isNegative ? 'rgba(252,129,129,0.1)' : 'var(--panel-bg)',
             fontSize: '0.7rem', fontWeight: 500,
-            color: isPositive ? '#48bb78' : isNegative ? '#fc8181' : 'rgba(255,255,255,0.4)',
+            color: isPositive ? '#48bb78' : isNegative ? '#fc8181' : 'var(--text-muted)',
           }}>
             {isPositive ? '↑' : isNegative ? '↓' : '→'} {Math.abs(change)}%
           </div>

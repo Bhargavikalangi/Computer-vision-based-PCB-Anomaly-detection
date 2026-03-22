@@ -155,7 +155,9 @@ def generate_report(payload: dict, db: Session = Depends(get_db)):
         raise HTTPException(400, "No analyses found for this period")
 
     report_id = str(uuid.uuid4())
-    output_path = os.path.join(settings.RESULTS_DIR, f"report_{report_id}.pdf")
+    timestamp = now.strftime("%Y%m%d_%H%M%S")
+    output_filename = f"report_{timestamp}_{report_id[:8]}.pdf"
+    output_path = os.path.join(settings.RESULTS_DIR, output_filename)
     Path(settings.RESULTS_DIR).mkdir(parents=True, exist_ok=True)
 
     success = generate_pdf_report(analyses, title, output_path)
@@ -181,7 +183,7 @@ def generate_report(payload: dict, db: Session = Depends(get_db)):
     return FileResponse(
         path=output_path,
         media_type="application/pdf",
-        filename=f"pcb_report_{report_id[:8]}.pdf",
+        filename=f"pcb_report_{timestamp}_{report_id[:8]}.pdf",
         headers={"Access-Control-Allow-Origin": "*"}
     )
 

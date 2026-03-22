@@ -1,17 +1,17 @@
 # PCB Anomaly Detection System
 
-A production-ready computer vision system for detecting PCB (Printed Circuit Board) anomalies using deep learning.
+A production-ready computer vision system for detecting PCB (Printed Circuit Board) anomalies using **OpenCV rule-based** image analysis (thresholds, morphology, color/texture heuristics). There is **no** trainable deep-learning detector in the analysis pipeline; the API reports the engine as **OpenCV Rule-Based**.
 
 ## Tech Stack
 - **Frontend**: Next.js 14 (App Router, plain JS)
 - **Backend**: Python FastAPI
 - **Database**: PostgreSQL
-- **CV Model**: PyTorch + OpenCV + YOLOv8
+- **Detection**: OpenCV (rule-based pipeline)
 - **Deployment**: Docker + Docker Compose
 
 ## Features
 - Real-time PCB image analysis
-- Multi-class anomaly detection (solder defects, missing components, shorts, opens)
+- Rule-based anomaly categories (e.g. burn-like regions, corrosion-like color, texture anomalies)
 - Interactive results with bounding box overlays
 - Historical analysis dashboard
 - Report generation (PDF)
