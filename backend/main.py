@@ -33,6 +33,8 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+
+
 # allow_origins=["*"] is only valid with allow_credentials=False (browser CORS spec).
 # This avoids missing ACAO headers when clients use different ports or hostnames.
 app.add_middleware(
