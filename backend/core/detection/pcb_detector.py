@@ -1,4 +1,4 @@
-import cv2
+﻿import cv2
 import numpy as np
 import time
 import uuid
@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 class PCBDetector:
     def __init__(self):
+
         """Initialize detector dependencies (model loader singleton)."""
         self.loader = ModelLoader.instance()
 
@@ -34,7 +35,8 @@ class PCBDetector:
         if annotate and result_dir:
             annotated_path = self._save_annotated(img, defects, image_path, result_dir)
         elapsed = round(time.time() - start, 3)
-        status = "fail" if defects else "pass"
+        #status = "fail" if defects else "pass"
+        status = "fail" if len(defects) >= 1 else "pass"
         avg_conf = float(np.mean([d["confidence"] for d in defects])) if defects else 99.5
         return {
             "status": status,
@@ -87,7 +89,8 @@ class PCBDetector:
             return False
 
         # --- Burn / Char (very dark regions; thresholds on raw gray to match true char/carbon) ---
-        burn_thresh = int(np.clip(np.percentile(gray_raw, 7), 18, 60))
+        #burn_thresh = int(np.clip(np.percentile(gray_raw, 7), 18, 60))
+        burn_thresh = int(np.clip(np.percentile(gray_raw, 10), 25, 65))
         _, burn_mask = cv2.threshold(gray_raw, burn_thresh, 255, cv2.THRESH_BINARY_INV)
         burn_mask = cv2.morphologyEx(burn_mask, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
         burn_mask = cv2.morphologyEx(burn_mask, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
@@ -133,7 +136,8 @@ class PCBDetector:
             if (aspect > 2.8 or aspect < 0.35) and area > 800:
                 continue
             # Reject regular package-like boxes and pin strips.
-            if extent > 0.80 and solidity > 0.90 and area > 500:
+            #if extent > 0.80 and solidity > 0.90 and area > 500:
+            if extent > 0.88 and solidity > 0.92 and area > 800:
                 continue
             roi = gray_raw[y:y+bh, x:x+bw]
             if roi.size == 0:
@@ -177,7 +181,7 @@ class PCBDetector:
         burn_mask2 = cv2.morphologyEx(burn_mask2, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
         for cnt in cv2.findContours(burn_mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]:
             area = cv2.contourArea(cnt)
-            if area < max(350, total_area * 0.00012) or area > max_burn_area:
+            if area < max(800, total_area * 0.0006) or area > max_burn_area:
                 continue
             x, y, bw, bh = cv2.boundingRect(cnt)
             if touches_border(x, y, bw, bh) and area <= large_border_ok:
@@ -215,7 +219,7 @@ class PCBDetector:
                 continue
             g_mean = float(np.mean(roi_gray_raw))
             # Corrosion is dull/mottled; skip very dark (burn/char) and bright reflective solder.
-            if g_mean < 48 or g_mean > 95:
+            if g_mean < 45 or g_mean > 110: 
                 continue
             extent = area / max(float(bw * bh), 1.0)
             hull = cv2.convexHull(cnt)
@@ -267,10 +271,14 @@ class PCBDetector:
             mean_dark = float(np.mean(gray_raw[y:y+bh, x:x+bw]))
             lap = cv2.Laplacian(gray_raw[y:y+bh, x:x+bw], cv2.CV_64F)
             edge_energy = float(np.mean(np.abs(lap)))
+
             # ESD / scorch: textured damage; very uniform black char is handled by burn pass.
-            esd_ok = (std_dev > 38 and mean_dark < 70) or (
-                mean_dark < 55 and area > total_area * 0.008 and (std_dev > 28 or edge_energy > 6.5)
-            )
+           
+           # esd_ok = (std_dev > 38 and mean_dark < 70) or (
+           #     mean_dark < 55 and area > total_area * 0.008 and (std_dev > 28 or edge_energy > 6.5)
+           # )
+            
+            esd_ok = (std_dev > 46 and mean_dark < 62)
             if esd_ok:
                 conf_score = round(min(92.0, 54.0 + std_dev / 2.2), 2)
                 if conf_score < min_conf_pct:
@@ -318,11 +326,16 @@ class PCBDetector:
         # Scene-level sanity filter:
         # If too many small burn hits are produced, this is usually a clean PCB with dark components.
         burn_like = [d for d in defects if d["type"] == "Burn Damage"]
-        if len(burn_like) >= 8:
+        if len(burn_like) >= 4:
             area_ratios = [(d["bbox"][2] * d["bbox"][3]) / float(total_area) for d in burn_like]
             any_large_burn = any(r >= 0.015 for r in area_ratios)
-            if float(np.median(area_ratios)) < 0.0035 and not any_large_burn:
+            if float(np.median(area_ratios)) < 0.006 and not any_large_burn:
                 defects = [d for d in defects if d["type"] not in {"Burn Damage", "ESD / Surface Damage"}]
+
+        #return defects
+        if len(defects) > 12:
+            defects.sort(key=lambda d: d["confidence"], reverse=True)
+            defects = defects[:12]
 
         return defects
 
