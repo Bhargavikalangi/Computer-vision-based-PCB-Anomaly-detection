@@ -23,7 +23,14 @@ export default function UploadView() {
     setFiles(prev => [...prev, ...newFiles].slice(0, MAX_FILES));
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: ACCEPTED_TYPES, maxFiles: MAX_FILES });
+  //const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: ACCEPTED_TYPES, maxFiles: MAX_FILES });
+
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({ 
+    onDrop, 
+    accept: ACCEPTED_TYPES, 
+    maxFiles: MAX_FILES,
+    noClick: false
+  });
 
   const removeFile = (id) => setFiles(prev => prev.filter(f => f.id !== id));
 
@@ -100,7 +107,13 @@ export default function UploadView() {
             >
               JPG, PNG, BMP, TIFF supported · Max {MAX_FILES} images · Any resolution
             </p>
-            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="btn-primary" style={{ marginTop: 20 }} onClick={e => e.stopPropagation()}>
+           <motion.button 
+              whileHover={{ scale: 1.03 }} 
+              whileTap={{ scale: 0.97 }} 
+              className="btn-primary" 
+              style={{ marginTop: 20 }} 
+              onClick={e => { e.stopPropagation(); open(); }}
+            >
               Browse Files
             </motion.button>
           </motion.div>
